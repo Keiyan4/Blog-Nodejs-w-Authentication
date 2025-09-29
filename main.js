@@ -30,6 +30,7 @@ app.get("/", passportConfig.Authenticated, (req, res) => {
 app.get("/about", passportConfig.Authenticated, (req, res) => {
   res.render("about", { title: "About" });
 });
+
 app.use(authRoutes);
 app.use(blogRoutes);
 

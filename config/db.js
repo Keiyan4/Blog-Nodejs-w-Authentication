@@ -1,26 +1,22 @@
 const { Client } = require("pg");
 require("dotenv").config();
 
-let config;
+const isLocal = process.env.USE_LOCAL_DB === "true";
 
-if (process.env.PG_EXTERNAL_URL) {
-  // Local dev connecting to Render DB
-  config = {
-    connectionString: process.env.PG_EXTERNAL_URL,
-    ssl: { rejectUnauthorized: false },
-  };
-} else {
-  // Local DB
-  config = {
-    user: process.env.PG_LOCAL_USER,
-    host: process.env.PG_LOCAL_HOST,
-    database: process.env.PG_LOCAL_DATABASE,
-    password: process.env.PG_LOCAL_PASSWORD,
-    port: process.env.PG_LOCAL_PORT,
-  };
-}
-const db = new Client(config);
-
+const db = new Client(
+  isLocal
+    ? {
+        user: process.env.PG_LOCAL_USER,
+        host: process.env.PG_LOCAL_HOST,
+        database: process.env.PG_LOCAL_DATABASE,
+        password: process.env.PG_LOCAL_PASSWORD,
+        port: process.env.PG_LOCAL_PORT,
+      }
+    : {
+        connectionString: process.env.PG_EXTERNAL_URL,
+        ssl: { rejectUnauthorized: false },
+      }
+);
 db.connect()
   .then(() => console.log("✅ DB connected successfully"))
   .catch((err) => console.error("❌ DB connection error:", err));

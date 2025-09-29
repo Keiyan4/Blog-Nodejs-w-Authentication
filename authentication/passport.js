@@ -4,16 +4,15 @@ const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const bcrypt = require("bcrypt");
 const pg = require("pg");
 
-const db_2 = new pg.Client({
-  user: process.env.PG_USER,
-  host: process.env.PG_HOST,
-  database: process.env.PG_DATABASE_2,
-  password: process.env.PG_PASSWORD,
-  port: process.env.PG_PORT,
+const db = new pg.Client({
+  user: process.env.PG_LOCAL_USER,
+  host: process.env.PG_LOCAL_HOST,
+  database: process.env.PG_LOCAL_DATABASE,
+  password: process.env.PG_LOCAL_PASSWORD,
+  port: process.env.PG_LOCAL_PORT,
 });
 
-db_2
-  .connect()
+db.connect()
   .then(() => console.log("DB connected"))
   .catch((err) => console.error(err));
 
@@ -22,7 +21,7 @@ passport.use(
   "local",
   new LocalStrategy(async (username, password, cb) => {
     try {
-      const { rows } = await db_2.query(
+      const { rows } = await db.query(
         "SELECT * FROM users WHERE username = $1",
         [username]
       );
@@ -52,12 +51,12 @@ passport.use(
     async (accessToken, refreshToken, profile, cb) => {
       const username = profile.email || `google_${profile.id}`;
       try {
-        const result = await db_2.query(
+        const result = await db.query(
           "SELECT * FROM users WHERE username = $1",
           [username]
         );
         if (result.rows.length === 0) {
-          const newUser = await db_2.query(
+          const newUser = await db.query(
             "INSERT INTO users (username, password, refreshtoken) VALUES ($1, $2, $3) RETURNING *",
             [username, "null", ""]
           );
@@ -79,9 +78,7 @@ passport.serializeUser((user, cb) => {
 
 passport.deserializeUser(async (id, cb) => {
   try {
-    const { rows } = await db_2.query("SELECT * FROM users WHERE id = $1", [
-      id,
-    ]);
+    const { rows } = await db.query("SELECT * FROM users WHERE id = $1", [id]);
     if (rows.length === 0) return cb(null, false);
     return cb(null, rows[0]);
   } catch (error) {

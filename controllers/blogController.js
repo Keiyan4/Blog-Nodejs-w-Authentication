@@ -9,9 +9,14 @@ const blogs_register_get = (req, res) => {
   res.render("register");
 };
 
+// Fetch all blogs
 const blogs_allBlogs_get = async (req, res) => {
   try {
-    const { rows } = await db.query("SELECT title, snippet, id FROM blogs");
+    const { rows } = await db.query(`
+      SELECT id, title, snippet
+      FROM blogs
+      ORDER BY id ASC
+    `);
 
     res.render("index", { title: "All Blogs", blogs: rows });
   } catch (err) {
@@ -26,7 +31,6 @@ const blogs_create_get = (req, res) => {
 
 const blogs_create_post = async (req, res) => {
   const { title, snippet, body } = req.body;
-  req.isA;
   try {
     const { rows } = await db.query(
       "INSERT INTO blogs (title, snippet, body) VALUES ($1, $2, $3) RETURNING *",
@@ -42,20 +46,17 @@ const blogs_create_post = async (req, res) => {
 
 const blogs_logout_get = (req, res) => {
   req.logout((err) => {
-    if (err) {
-      console.log(err);
-    }
+    if (err) console.log(err);
     res.redirect("/blogs/login");
   });
 };
 
+// Fetch single blog
 const blogs_details_get = async (req, res) => {
   const id = req.params.id;
-  console.log("Blog ID:", id);
-
   try {
     const { rows } = await db.query(
-      "SELECT title, body, id FROM blogs WHERE id = $1",
+      "SELECT id, title, body FROM blogs WHERE id = $1",
       [id]
     );
 
@@ -63,18 +64,15 @@ const blogs_details_get = async (req, res) => {
       return res.status(404).send("Blog not found");
     }
 
-    const result = rows[0];
-    res.render("details", { blog: result, title: "Blog Details" });
+    res.render("details", { blog: rows[0], title: "Blog Details" });
   } catch (err) {
     console.error("Error fetching blog details:", err.message);
-    res.status(500).send("Server Error" + err.message);
+    res.status(500).send("Server Error: " + err.message);
   }
 };
 
 const blogs_delete = async (req, res) => {
   const id = req.params.id;
-  console.log("Blog ID:", id);
-
   try {
     const { rows } = await db.query(
       "DELETE FROM blogs WHERE id = $1 RETURNING *",
