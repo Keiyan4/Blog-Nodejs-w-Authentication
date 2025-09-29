@@ -2,19 +2,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const bcrypt = require("bcrypt");
-const pg = require("pg");
-
-const db = new pg.Client({
-  user: process.env.PG_LOCAL_USER,
-  host: process.env.PG_LOCAL_HOST,
-  database: process.env.PG_LOCAL_DATABASE,
-  password: process.env.PG_LOCAL_PASSWORD,
-  port: process.env.PG_LOCAL_PORT,
-});
-
-db.connect()
-  .then(() => console.log("DB connected"))
-  .catch((err) => console.error(err));
+const db = require("../config/db");
 
 // Local Strategy //
 passport.use(
