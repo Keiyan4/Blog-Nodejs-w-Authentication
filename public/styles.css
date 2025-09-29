@@ -1,0 +1,398 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+
+body {
+  background: #161a1d;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 20px;
+  font-family: "Quicksand", sans-serif;
+  box-sizing: border-box;
+}
+p,
+h1,
+h2,
+h3,
+a,
+ul {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  color: hsl(200, 100%, 50%);
+}
+
+.about h2,
+p {
+  font-family: "Quicksand", sans-serif;
+  color: #e5e7eb;
+}
+/* nav & footer styles */
+nav {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 60px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  text-transform: uppercase;
+}
+nav ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+nav li {
+  list-style-type: none;
+  margin-left: 20px;
+}
+nav h1 {
+  font-size: 3em;
+}
+nav p,
+nav a {
+  color: #e5e7eb;
+  font-weight: 300;
+}
+
+nav .bi-power {
+  font-size: 1.5rem; /* bigger icon */
+  color: red; /* red logout icon */
+}
+
+footer {
+  color: #777;
+  text-align: center;
+  margin: 80px auto 20px;
+}
+h2 {
+  margin-bottom: 40px;
+}
+h3 {
+  text-transform: capitalize;
+  margin-bottom: 8px;
+}
+.content {
+  margin-left: 20px;
+}
+
+/* index styles */
+.blogs a {
+  display: block;
+  margin: 40px 0;
+  padding-left: 30px;
+  border-left: 6px solid;
+  border-image: linear-gradient(
+      to bottom,
+      hsl(200, 100%, 30%),
+      hsl(200, 100%, 50%)
+    )
+    1;
+  font-family: "Quicksand", sans-serif;
+  transition: 0.3s ease;
+}
+
+.blogs a:hover {
+  backdrop-filter: blur(15px);
+  font-family: "Quicksand", sans-serif;
+  font-size: 20px;
+}
+.blogs h2 {
+  font-family: "Quicksand", sans-serif;
+  color: #e5e7eb;
+}
+.blogs h3,
+p {
+  color: #e5e7eb;
+}
+.blogs a:hover h3 {
+  color: #1ba6e7;
+}
+
+/* details styles */
+.details {
+  position: relative;
+}
+.details h2,
+p {
+  font-family: "Quicksand", sans-serif;
+}
+
+.details .bi-trash3-fill {
+  color: hsl(200, 100%, 50%);
+  font-size: 2rem;
+}
+.delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 50%;
+  padding: 8px;
+}
+.delete:hover {
+  cursor: pointer;
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Modal */
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+}
+
+.modal {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 40px;
+  width: 600px;
+  border-radius: 15px;
+  color: #fff;
+  animation: fadeIn 0.8s ease;
+  box-shadow: 0 0 20px #222;
+  position: relative;
+}
+
+.modal .input-box {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.modal .input-box input,
+.modal .input-box textarea {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #fff;
+  color: #ccc;
+  font-size: 16px;
+  outline: none;
+  resize: none;
+}
+
+.modal .input-box > label {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  color: #ccc;
+  font-size: 16px;
+  pointer-events: none;
+  transition: 0.3s ease;
+}
+
+.modal .input-box input:focus + label,
+.modal .input-box input:valid + label,
+.modal .input-box textarea:focus + label,
+.modal .input-box textarea:valid + label {
+  top: -10px;
+  font-size: 12px;
+  color: hsl(200, 100%, 50%);
+}
+
+.modal button {
+  width: 100%;
+  padding: 12px;
+  background-color: #00f5ff;
+  border: none;
+  border-radius: 25px;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 10px;
+}
+
+.modal button:hover {
+  background: #00c3d4;
+  box-shadow: 0 0 10px #00f5ff;
+}
+
+.modal .closeBtn {
+  background-color: #ff4b4b;
+  color: #fff;
+}
+
+.modal .closeBtn:hover {
+  background-color: #d43f3f;
+  box-shadow: 0 0 10px #ff4b4b;
+}
+
+/*Background image with overlay */
+
+.container {
+  /*height: 100vh;*/
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.slide-right p {
+  color: #e5e7eb;
+  height: 60px;
+}
+
+.slide-right {
+  display: inline-block;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #00f5ff;
+  position: relative;
+  /* Start off-screen left */
+  transform: translateX(-40%);
+  /* Apply animation */
+  animation: slideRight 3s linear infinite alternate;
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(-40%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/*Glass box*/
+.login-box,
+.register-box {
+  background-color: #161a1d;
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 40px;
+  width: 320px;
+  margin-right: 20px;
+  margin-left: 100px;
+  color: #fff;
+  animation: fadeIn 1s ease;
+  box-shadow: 0 0 5px #fff;
+}
+
+/*Heading*/
+.login-box h2,
+.register-box h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #e5e7eb;
+}
+
+.login-box p,
+.register-box p {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #e5e7eb;
+}
+
+.login-box p > a,
+.register-box p > a {
+  text-decoration: underline;
+  color: #e5e7eb;
+}
+
+/*Input box*/
+.input-box {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #fff;
+  color: #ccc;
+  font-size: 16px;
+  outline: none;
+}
+
+.input-box label {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  color: #ccc;
+  font-size: 16px;
+  pointer-events: none;
+  transition: 0.3s ease;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.toggle-password img {
+  width: 20px;
+  height: 20px;
+}
+
+/*Label animation*/
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
+  top: -10px;
+  font-size: 12px;
+  color: hsl(200, 100%, 50%);
+}
+
+/*Button*/
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #00f5ff;
+  border: none;
+  border-radius: 25px;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #00c3d4;
+  box-shadow: 0 0 10px #00f5ff;
+}
+
+/* Google button */
+.google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  background-color: #fff;
+  color: #000;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.google-btn img {
+  width: 20px;
+  height: 20px;
+}
+
+.google-btn:hover {
+  background-color: #f1f1f1;
+  box-shadow: 0 0 10px #00f5ff;
+}
+
+/*Animation*/
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

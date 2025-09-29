@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <nav>
+      <div class="site-title">
+        <a href="/"><h1>Fun Blogs</h1></a>
+        <p>Frolic around here...</p>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="slide-right">
+        <p>Join a community of writers and readers.</p>
+        <p>Share your stories.</p>
+        <p>Have fun with blogging.</p>
+      </div>
+
+      <div class="register-box">
+        <h2>REGISTER</h2>
+        <form action="/blogs/register" method="POST">
+          <div class="input-box">
+            <input type="text" name="username" id="username" required />
+            <label for="username">username</label>
+          </div>
+          <div class="input-box">
+            <input type="password" name="password" id="password" required />
+            <span class="toggle-password">
+              <img
+                src="/eye-solid-full.svg"
+                class="eye-icon"
+                alt="show-password"
+              />
+            </span>
+            <label for="password">password</label>
+          </div>
+          <button type="submit">Submit</button>
+        </form>
+
+        <form action="/auth/google" method="get">
+          <button type="submit" class="google-btn">
+            <img
+              src="https://developers.google.com/identity/images/g-logo.png"
+              alt="Google logo"
+              height="20"
+            />
+            Sign in with Google
+          </button>
+        </form>
+        <p>Already have an account?<a href="/blogs/login"> Login!</a></p>
+      </div>
+    </div>
+    <script>
+      const password = document.querySelector("#password");
+      const toggle = document.querySelector(".toggle-password");
+      const eyeIcon = document.querySelector(".eye-icon");
+
+      toggle.addEventListener("click", () => {
+        if (password.type === "password") {
+          password.type = "text";
+          eyeIcon.src = "/eye-slash-solid-full.svg";
+          eyeIcon.alt = "hide-password";
+        } else {
+          password.type = "password";
+          eyeIcon.src = "/eye-solid-full.svg";
+          eyeIcon.alt = "show-password";
+        }
+      });
+    </script>
+  </body>
+</html>

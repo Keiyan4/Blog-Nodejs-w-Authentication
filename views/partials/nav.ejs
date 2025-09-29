@@ -1,0 +1,47 @@
+<nav>
+  <div class="site-title">
+    <a href="/"><h1>SCOPERS</h1></a>
+    <p>Frolic around here...</p>
+  </div>
+  <ul>
+    <li><a href="/">Blogs</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="#" class="openModal">New Blog</a></li>
+    <li>
+      <a href="/blogs/logout" role="button"><i class="bi bi-power"></i> </a>
+    </li>
+  </ul>
+</nav>
+<dialog class="modal">
+  <form action="/blogs" method="POST">
+    <div class="input-box">
+      <input type="text" name="title" id="title" required />
+      <label for="title">Blog Title:</label>
+    </div>
+    <div class="input-box">
+      <input type="text" name="snippet" id="snippet" required />
+      <label for="snippet">Blog Snippet:</label>
+    </div>
+    <div class="input-box">
+      <textarea name="body" id="body" required></textarea>
+      <label for="body">Blog Body:</label>
+    </div>
+    <button type="submit">Post</button>
+  </form>
+  <button class="closeBtn">Cancel</button>
+</dialog>
+<script>
+  const modal = document.querySelector(".modal");
+  const openBtn = document.querySelector(".openModal");
+  const closeBtn = document.querySelector(".closeBtn");
+
+  openBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    modal.showModal();
+  });
+
+  closeBtn.addEventListener("click", (e) => {
+    modal.close();
+    e.preventDefault();
+  });
+</script>
