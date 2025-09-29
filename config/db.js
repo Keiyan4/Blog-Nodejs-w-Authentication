@@ -1,24 +1,22 @@
 const { Client } = require("pg");
-require("dotenv").config();
 
-const isLocal = process.env.USE_LOCAL_DB === "true";
+const connectionString = process.env.PG_EXTERNAL_URL;
 
-const db = new Client(
-  isLocal
-    ? {
-        user: process.env.PG_LOCAL_USER,
-        host: process.env.PG_LOCAL_HOST,
-        database: process.env.PG_LOCAL_DATABASE,
-        password: process.env.PG_LOCAL_PASSWORD,
-        port: process.env.PG_LOCAL_PORT,
-      }
-    : {
-        connectionString: process.env.PG_EXTERNAL_URL,
-        ssl: { rejectUnauthorized: false },
-      }
-);
+if (!connectionString) {
+  console.error("❌ PG_EXTERNAL_URL is not defined in Environment Variables");
+  process.exit(1);
+}
+
+const db = new Client({
+  connectionString,
+  ssl: { rejectUnauthorized: false },
+});
+
 db.connect()
-  .then(() => console.log("✅ DB connected successfully"))
-  .catch((err) => console.error("❌ DB connection error:", err));
+  .then(() => console.log("✅ DB connected successfully to Render Postgres"))
+  .catch((err) => {
+    console.error("❌ DB connection error:", err);
+    process.exit(1);
+  });
 
 module.exports = db;
