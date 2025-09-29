@@ -1,5 +1,5 @@
 const passportConfig = require("../authentication/passport");
-const db_2 = require("../config/db_users");
+const db = require("../config/db");
 const bcrypt = require("bcrypt");
 
 const { validationResult } = require("express-validator");
@@ -18,7 +18,7 @@ const auth_register_post = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const checkResult = await db_2.query(
+    const checkResult = await db.query(
       "SELECT * FROM users WHERE username = $1",
       [username]
     );
@@ -31,7 +31,7 @@ const auth_register_post = async (req, res) => {
     const hash = await bcrypt.hash(password, saltRounds);
     console.log("Password hashed successfully");
 
-    await db_2.query(
+    await db.query(
       "INSERT INTO users (username, password, refreshtoken) VALUES ($1, $2, $3) RETURNING *",
       [username, hash, ""]
     );
