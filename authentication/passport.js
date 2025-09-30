@@ -4,6 +4,11 @@ const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const bcrypt = require("bcrypt");
 const db = require("../config/db");
 
+const GOOGLE_CALLBACK_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://blog-nodejs-w-authentication-1.onrender.com/auth/google/blogs"
+    : "http://localhost:3000/auth/google/blogs";
+
 // Local Strategy //
 passport.use(
   "local",
@@ -34,7 +39,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/google/blogs",
+      callbackURL: GOOGLE_CALLBACK_URL,
     },
     async (accessToken, refreshToken, profile, cb) => {
       const username = profile.email || `google_${profile.id}`;
