@@ -10,20 +10,12 @@ const auth_register_post = async (req, res) => {
   console.log("Incoming request body:", req.body);
   console.log("Before inserting user");
   const errors = validationResult(req);
-
-  const { username, password } = req.body;
-
   if (!errors.isEmpty()) {
     console.log("Validation errors:", errors.array());
-    const mappedErrors = {};
-    errors.array().forEach((err) => {
-      mappedErrors[err.path] = err.msg;
-    });
-    return res.status(400).render("register", {
-      errors: mappedErrors,
-      username,
-    });
+    return res.status(400).json({ errors: errors.array() });
   }
+
+  const { username, password } = req.body;
 
   try {
     const checkResult = await db.query(
@@ -34,7 +26,7 @@ const auth_register_post = async (req, res) => {
     if (checkResult.rows.length > 0) {
       console.log("User already exists:", username);
       return res.status(409).render("register", {
-        errors: { username: "Username already exists" },
+        error: "Username already exists. Please choose another one.",
         username,
       });
     }
