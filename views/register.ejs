@@ -23,6 +23,9 @@
       <div class="register-box">
         <h2>REGISTER</h2>
         <form action="/blogs/register" method="POST">
+          <% if (typeof error !== 'undefined' && error) { %>
+          <div class="alert"><%= error %></div>
+          <% } %>
           <div class="input-box">
             <input type="text" name="username" id="username" required />
             <label for="username">username</label>

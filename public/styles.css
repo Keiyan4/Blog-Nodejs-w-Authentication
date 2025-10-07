@@ -296,6 +296,15 @@ dialog::backdrop {
   margin-bottom: 30px;
 }
 
+.alert {
+  color: #f4656c;
+
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  text-align: center;
+}
+
 .input-box input {
   width: 100%;
   padding: 12px;

@@ -10,12 +10,20 @@ const auth_register_post = async (req, res) => {
   console.log("Incoming request body:", req.body);
   console.log("Before inserting user");
   const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    console.log("Validation errors:", errors.array());
-    return res.status(400).json({ errors: errors.array() });
-  }
 
   const { username, password } = req.body;
+
+  if (!errors.isEmpty()) {
+    console.log("Validation errors:", errors.array());
+    const mappedErrors = {};
+    errors.array().forEach((err) => {
+      mappedErrors[err.path] = err.msg;
+    });
+    return res.status(400).render("register", {
+      errors: mappedErrors,
+      username,
+    });
+  }
 
   try {
     const checkResult = await db.query(
@@ -25,7 +33,10 @@ const auth_register_post = async (req, res) => {
 
     if (checkResult.rows.length > 0) {
       console.log("User already exists:", username);
-      return res.redirect("/blogs/login");
+      return res.status(409).render("register", {
+        errors: { username: "Username already exists" },
+        username,
+      });
     }
 
     const hash = await bcrypt.hash(password, saltRounds);
